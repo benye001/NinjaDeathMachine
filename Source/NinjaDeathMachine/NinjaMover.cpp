@@ -23,8 +23,7 @@ void UNinjaMover::BeginPlay()
 	Super::BeginPlay();
 
 	MeshComponent = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
-	MeshComponent->OnComponentBeginOverlap.AddDynamic(this, &UNinjaMover::BeginOverlap);
-	
+	MeshComponent->OnComponentHit.AddDynamic(this, &UNinjaMover::OnComponentHit);
 }
 
 
@@ -32,22 +31,10 @@ void UNinjaMover::BeginPlay()
 void UNinjaMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-	if (GetOwner()->IsOverlappingActor(Floor))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("NinjaMover Overlap"));
-	}
 }
 
-void UNinjaMover::BeginOverlap(
-	UPrimitiveComponent* OverlappedComponent, 
-    AActor* OtherActor, 
-    UPrimitiveComponent* OtherComp, 
-    int32 OtherBodyIndex, 
-    bool bFromSweep, 
-    const FHitResult &SweepResult )
+void UNinjaMover::OnComponentHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("NinjaMover Overlap"));
-	MeshComponent->AddForce(FVector(0.f, 0.f, 1000.f));
+	UE_LOG(LogTemp, Warning, TEXT("NinjaMover Hit"));
+	MeshComponent->AddForce(FVector(0.f, 0.f, -1000.f));
 }
