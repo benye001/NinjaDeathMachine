@@ -36,5 +36,11 @@ void UNinjaMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 void UNinjaMover::OnComponentHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	UE_LOG(LogTemp, Warning, TEXT("NinjaMover Hit"));
-	MeshComponent->AddForce(FVector(0.f, 0.f, -1000.f));
+	MeshComponent->AddForce(FVector(0.f, 0.f, 15000000.f));
+	MeshComponent->AddForce(FVector(1500000.f, 0.f, 0.f));
+}
+
+void OnComponentHitWall(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	UE_LOG(LogTemp,Warning,TEXT("NinjaMover Hit Wall"));
 }

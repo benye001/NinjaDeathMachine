@@ -27,11 +27,17 @@ public:
 	UFUNCTION()
     void OnComponentHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
+	UFUNCTION()
+    void OnComponentHitWall(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	
 private:
 	
 
 	UPROPERTY(EditAnywhere)
 	AActor* Floor;
+
+	UPROPERTY(EditAnywhere)
+	AActor* Wall;
 	
 	UPROPERTY()
 	UStaticMeshComponent* MeshComponent;
