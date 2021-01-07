@@ -3,6 +3,8 @@
 
 #include "NinjaMover.h"
 
+
+#include "DrawDebugHelpers.h"
 #include "Physics/ImmediatePhysics/ImmediatePhysicsShared/ImmediatePhysicsCore.h"
 
 // Sets default values for this component's properties
@@ -24,6 +26,8 @@ void UNinjaMover::BeginPlay()
 
 	MeshComponent = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	MeshComponent->OnComponentHit.AddDynamic(this, &UNinjaMover::OnComponentHit);
+
+	MeshComponent->AddForce(FVector(BounceStrength, 0.f, 0.f));
 }
 
 
@@ -36,11 +40,7 @@ void UNinjaMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 void UNinjaMover::OnComponentHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	UE_LOG(LogTemp, Warning, TEXT("NinjaMover Hit"));
-	MeshComponent->AddForce(FVector(0.f, 0.f, 15000000.f));
-	MeshComponent->AddForce(FVector(1500000.f, 0.f, 0.f));
-}
 
-void OnComponentHitWall(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
-{
-	UE_LOG(LogTemp,Warning,TEXT("NinjaMover Hit Wall"));
+	const FVector BounceForce = Hit.ImpactNormal * BounceStrength;
+	MeshComponent->AddForce(FVector(BounceForce.X, 0.f, BounceForce.Z));
 }

@@ -26,18 +26,12 @@ public:
 
 	UFUNCTION()
     void OnComponentHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
-
-	UFUNCTION()
-    void OnComponentHitWall(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	
 private:
 	
 
 	UPROPERTY(EditAnywhere)
-	AActor* Floor;
-
-	UPROPERTY(EditAnywhere)
-	AActor* Wall;
+	float BounceStrength = 10000000.f;
 	
 	UPROPERTY()
 	UStaticMeshComponent* MeshComponent;
