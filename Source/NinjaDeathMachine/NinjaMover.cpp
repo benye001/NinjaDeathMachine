@@ -2,6 +2,9 @@
 
 
 #include "NinjaMover.h"
+#include "Kismet/GameplayStatics.h"
+#include <activation.h>
+
 
 
 #include "DrawDebugHelpers.h"
@@ -39,8 +42,13 @@ void UNinjaMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 
 void UNinjaMover::OnComponentHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("NinjaMover Hit"));
-
-	const FVector BounceForce = Hit.ImpactNormal * BounceStrength;
-	MeshComponent->AddForce(FVector(BounceForce.X, 0.f, BounceForce.Z));
+	if((OtherActor != NULL) &&  (OtherComp != NULL) )
+	{
+		if(GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1,5.f, FColor::Green,FString::Printf(TEXT("I just hit something")));
+		}
+		const FVector BounceForce = Hit.ImpactNormal * BounceStrength;
+		MeshComponent->AddForce(FVector(BounceForce.X, 0.f, BounceForce.Z));
+	}
 }
